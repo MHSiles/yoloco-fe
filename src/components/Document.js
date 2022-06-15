@@ -13,17 +13,6 @@ const Document = () => {
         setDocument(event.target.value);
     };
 
-    const uploadFile = () => {
-        // Create a reference to 'images/mountains.jpg'
-        const storageRef = ref(projectStorage, 'pdf/mountains.jpg');
-
-        // 'file' comes from the Blob or File API
-        // uploadBytes(storageRef, file).then((snapshot) => {
-        //     console.log('Uploaded a blob or file!');
-        // });
-
-    }
-
     const downloadFile = () => {
         // Create a reference with an initial file path and name
         const pathReference = ref(projectStorage, `pdf/${document}.pdf`);  

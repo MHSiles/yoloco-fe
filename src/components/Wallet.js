@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import { projectStorage } from '../services/firebase';
+import { ref } from "firebase/storage";
 
 
 const Wallet = () => {
@@ -16,6 +18,17 @@ const Wallet = () => {
             setListOfWallets([...listOfWallets, address]);
             setAddress('');
         }
+    }
+
+    const uploadFile = () => {
+        // Create a reference to 'images/mountains.jpg'
+        const storageRef = ref(projectStorage, 'pdf/mountains.jpg');
+
+        // 'file' comes from the Blob or File API
+        // uploadBytes(storageRef, file).then((snapshot) => {
+        //     console.log('Uploaded a blob or file!');
+        // });
+
     }
 
     const handleSubmit = () => {
