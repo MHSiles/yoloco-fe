@@ -10,11 +10,11 @@ const App = () => {
                 Crypto Portfolio Risk Calculator
                 </h1>
             </div>
-            <div class="ui grid">
-                <div class="eight wide column">
+            <div className="ui grid">
+                <div className="eight wide column">
                     <Wallet></Wallet>
                 </div>
-                <div class="eight wide column">
+                <div className="eight wide column">
                     <Document></Document>
                 </div>
             </div>
