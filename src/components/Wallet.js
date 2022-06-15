@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import { projectStorage } from '../services/firebase';
 import { ref } from "firebase/storage";
+import Banner from './Banner';
 
 
 const Wallet = () => {
 
     const [address, setAddress] = useState('');
     const [listOfWallets, setListOfWallets] = useState([]);
+    const [success, setSuccess] = useState(false);
 
     const handleTextChange = (e) => {
         setAddress(e.target.value)
@@ -31,22 +33,21 @@ const Wallet = () => {
 
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         console.log(address)
         console.log(listOfWallets)
 
         const postData = {
             listOfWallets: listOfWallets
         }
-        axios.post('https://jsonplaceholder.typicode.com/posts', {postData}).then(res => {
-            console.log(res)
-            console.log(res.data)
+        await axios.get(`http://localhost:5000?walletId=${listOfWallets[0]}`, {postData}).then(res => {
+            setSuccess(res.status === 200 ? true : false);
         }) 
     }
 
     return (
         <div className='ui grid'>
-            <div class="sixteen wide column">
+            <div className="sixteen wide column">
                 <div className="ui form" style={{marginRight: "10%", marginLeft: "10%"}}>
                     <div className="field">
                         <label>Add a Wallet</label>
@@ -73,6 +74,10 @@ const Wallet = () => {
                     </table>
                     <div className="ui green bottom attached button" tabIndex="0" onClick={handleSubmit}>Submit</div>
                 </div>
+                {success
+                        ? <Banner title={'Success'} message={'The report is ready for download.'} style={{color: "rgb(50,200,50)", backgroundColor: "rgb(200,256,200)"}}></Banner>
+                        : ''
+                    }
             </div>
         </div>
 

@@ -4,10 +4,10 @@ const DownLoadButton = props => {
 
     return (
         <a 
-            class="ui primary button"
+            className="ui primary button"
             href={props.url}
             target="_blank">
-                <i class="download icon"></i>
+                <i className="download icon"></i>
                 Download Risk Report
         </a>
     );

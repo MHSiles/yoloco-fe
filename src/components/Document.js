@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { projectStorage } from '../services/firebase';
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
-import Error from './Error';
+import Banner from './Banner';
 import DownLoadButton from './DownloadButton';
 
 const Document = () => {
@@ -44,12 +44,12 @@ const Document = () => {
 
     return (
         <div>
-            <div class="header" style={{paddingBottom: "20px"}}>
+            <div className="header" style={{paddingBottom: "20px"}}>
                 <h1>
                     Download your document
                 </h1>
             </div>
-            <div class="ui action input">
+            <div className="ui action input">
                 <input
                     type="text"
                     value={document}
@@ -57,13 +57,13 @@ const Document = () => {
                     placeholder="Search...">
 
                 </input>
-                <button class="ui primary button" onClick={downloadFile}>Download</button>
+                <button className="ui primary button" onClick={downloadFile}>Download</button>
             </div>
             { url === '' && errorMessage === ''
                 ? ''
                 : <>
                     {errorMessage !== ''
-                        ? <Error message={errorMessage}></Error>
+                        ? <Banner title={'Error'} message={errorMessage} style={{color: "rgb(200,50,50)", backgroundColor: "rgb(256,200,200)"}}></Banner>
                         : <DownLoadButton url={url}></DownLoadButton>
                     }
                 </>
