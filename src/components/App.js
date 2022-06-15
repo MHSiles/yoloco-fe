@@ -1,17 +1,16 @@
-import React from 'react';
+import Document from "./Document";
 
-class App extends React.Component {
+const App = () => {
 
-    render() {
-        return (
-            <div class="ui message">
-                <div class="header">
-                    Welcome to React!
-                </div>
-                <p>Sample text</p>
+    return (
+        <div class="ui grid">
+            <div class="eight wide column"></div>
+            <div class="eight wide column">
+                <Document></Document>
             </div>
-        );
-      }
+        </div>
+    )
+
 }
 
 export default App;
