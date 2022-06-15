@@ -22,7 +22,6 @@ const Document = () => {
         //     console.log('Uploaded a blob or file!');
         // });
 
-
     }
 
     const downloadFile = () => {
@@ -56,22 +55,20 @@ const Document = () => {
 
     return (
         <div>
-            <div class="ui message">
-                <div class="header" style={{paddingBottom: "20px"}}>
-                    <h1>
-                        Download your document
-                    </h1>
-                </div>
-                <div class="ui action input">
-                    <input
-                        type="text"
-                        value={document}
-                        onChange={onInputChange}
-                        placeholder="Search...">
-    
-                    </input>
-                    <button class="ui primary button" onClick={downloadFile}>Download</button>
-                </div>
+            <div class="header" style={{paddingBottom: "20px"}}>
+                <h1>
+                    Download your document
+                </h1>
+            </div>
+            <div class="ui action input">
+                <input
+                    type="text"
+                    value={document}
+                    onChange={onInputChange}
+                    placeholder="Search...">
+
+                </input>
+                <button class="ui primary button" onClick={downloadFile}>Download</button>
             </div>
             { url === '' && errorMessage === ''
                 ? ''
