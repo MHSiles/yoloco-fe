@@ -13,18 +13,6 @@ const Document = () => {
         setDocument(event.target.value);
     };
 
-    const uploadFile = () => {
-        // Create a reference to 'images/mountains.jpg'
-        const storageRef = ref(projectStorage, 'pdf/mountains.jpg');
-
-        // 'file' comes from the Blob or File API
-        // uploadBytes(storageRef, file).then((snapshot) => {
-        //     console.log('Uploaded a blob or file!');
-        // });
-
-
-    }
-
     const downloadFile = () => {
         // Create a reference with an initial file path and name
         const pathReference = ref(projectStorage, `pdf/${document}.pdf`);  
@@ -56,22 +44,20 @@ const Document = () => {
 
     return (
         <div>
-            <div class="ui message">
-                <div class="header" style={{paddingBottom: "20px"}}>
-                    <h1>
-                        Download your document
-                    </h1>
-                </div>
-                <div class="ui action input">
-                    <input
-                        type="text"
-                        value={document}
-                        onChange={onInputChange}
-                        placeholder="Search...">
-    
-                    </input>
-                    <button class="ui primary button" onClick={downloadFile}>Download</button>
-                </div>
+            <div class="header" style={{paddingBottom: "20px"}}>
+                <h1>
+                    Download your document
+                </h1>
+            </div>
+            <div class="ui action input">
+                <input
+                    type="text"
+                    value={document}
+                    onChange={onInputChange}
+                    placeholder="Search...">
+
+                </input>
+                <button class="ui primary button" onClick={downloadFile}>Download</button>
             </div>
             { url === '' && errorMessage === ''
                 ? ''
