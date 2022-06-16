@@ -3,6 +3,7 @@ import axios from 'axios';
 import { projectStorage } from '../services/firebase';
 import { ref } from "firebase/storage";
 import Banner from './Banner';
+import DownLoadButton from './DownloadButton';
 
 
 const Wallet = () => {
@@ -41,6 +42,7 @@ const Wallet = () => {
             listOfWallets: listOfWallets
         }
         await axios.get(`http://localhost:5000?walletId=${listOfWallets[0]}`, {postData}).then(res => {
+            console.log(res);
             setSuccess(res.status === 200 ? true : false);
         }) 
     }
@@ -76,6 +78,10 @@ const Wallet = () => {
                 </div>
                 {success
                         ? <Banner title={'Success'} message={'The report is ready for download.'} style={{color: "rgb(50,200,50)", backgroundColor: "rgb(200,256,200)"}}></Banner>
+                        : ''
+                    }
+                {success
+                        ? <DownLoadButton url={"https://firebasestorage.googleapis.com/v0/b/yoloco-cbd6b.appspot.com/o/pdf%2FPortfolioAnalysisR3.pdf?alt=media&token=2a07ce0f-262f-4c62-9000-80d8648453e5"}></DownLoadButton>
                         : ''
                     }
             </div>
