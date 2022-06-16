@@ -42,7 +42,7 @@ const Wallet = () => {
         const postData = {
             listOfWallets: listOfWallets
         }
-        await axios.get(`http://localhost:5000?walletId=${listOfWallets[0]}`, {postData}).then(res => {
+        await axios.get(`https://yoloco-be.herokuapp.com/?walletId=${listOfWallets[0]}`, {postData}).then(res => {
             uploadFile(res, listOfWallets[0]); 
         }) 
     }
