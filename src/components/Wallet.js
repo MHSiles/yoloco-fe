@@ -45,7 +45,27 @@ const Wallet = () => {
         await axios.get(`http://localhost:5000?walletId=${listOfWallets[0]}`, {postData}).then(res => {
             uploadFile(res, listOfWallets[0]); 
         }) 
+
+        
     }
+
+    const accountChangeHandler = (account) => {
+        // Setting an address data
+        console.log(account);
+        setListOfWallets([...listOfWallets, account]);
+    };
+
+    const btnHandler = () => { // for metamask button
+        // Asking if metamask is already present or not
+        if (window.ethereum) {
+          // res[0] for fetching a first wallet
+          window.ethereum
+            .request({ method: "eth_requestAccounts" })
+            .then((res) => accountChangeHandler(res[0]));
+        } else {
+          alert("install metamask extension!!");
+        }
+      };
 
     return (
         <div className='ui grid'>
@@ -56,7 +76,7 @@ const Wallet = () => {
                         <input type="text" value={address} placeholder="Wallet Address" onChange={handleTextChange}></input>
                     </div>
                     <div className="ui black bottom attached button" tabIndex="0"  onClick={handleAdd}>Add</div>
-                
+                    <div className="ui orange bottom attached button" tabIndex="0"  onClick={btnHandler} style={{marginRight: "30%", marginLeft: "30%"}} >Link MetaMask</div>
 
                     <table className="ui table">
                         <thead>
@@ -84,6 +104,7 @@ const Wallet = () => {
                         ? <DownloadButton url={url}></DownloadButton>
                         : ''
                     }
+                
             </div>
         </div>
 
