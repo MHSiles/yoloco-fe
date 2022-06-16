@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getStorage } from 'firebase/storage';
+import { ref, getStorage, getDownloadURL } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
 const { REACT_APP_FIREBASE_API_KEY, REACT_APP_AUTH_DOMAIN, REACT_APP_PROJECT_ID, REACT_APP_STORAGE_BUCKET, REACT_APP_APP_ID } = process.env;
 
@@ -18,8 +18,16 @@ const db = getFirestore(app);
 const projectStorage = getStorage();
 const projectFirestore = getFirestore();
 
+const downloadUrl = (fileName) => {
+
+  const pathReference = ref(projectStorage, `pdf/${fileName}.pdf`);
+
+  return getDownloadURL(pathReference);
+};
+
 export {
   db,
   projectStorage,
-  projectFirestore
+  projectFirestore,
+  downloadUrl
 };

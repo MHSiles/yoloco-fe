@@ -1,6 +1,6 @@
 
 
-const DownLoadButton = props => {
+const DownloadButton = props => {
 
     return (
         <a 
@@ -13,4 +13,4 @@ const DownLoadButton = props => {
     );
 }
 
-export default DownLoadButton;
+export default DownloadButton;

@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { projectStorage } from '../services/firebase';
-import { ref } from "firebase/storage";
+import { downloadUrl, projectStorage } from '../services/firebase';
+import { ref, uploadString } from "firebase/storage";
 import Banner from './Banner';
+import DownloadButton from './DownloadButton';
 
 
 const Wallet = () => {
 
     const [address, setAddress] = useState('');
+    const [url, setUrl] = useState('');
     const [listOfWallets, setListOfWallets] = useState([]);
     const [success, setSuccess] = useState(false);
 
@@ -22,26 +24,26 @@ const Wallet = () => {
         }
     }
 
-    const uploadFile = () => {
-        // Create a reference to 'images/mountains.jpg'
-        const storageRef = ref(projectStorage, 'pdf/mountains.jpg');
+    const uploadFile = async (response, fileName) => {
 
-        // 'file' comes from the Blob or File API
-        // uploadBytes(storageRef, file).then((snapshot) => {
-        //     console.log('Uploaded a blob or file!');
-        // });
+        const mountainImagesRef = ref(projectStorage, `pdf/${fileName}.pdf`);
+
+        uploadString(mountainImagesRef, response.data, 'base64').then((snapshot) => {
+            downloadUrl(fileName)
+                .then((documentUrl) => {
+                    setUrl(documentUrl);
+                    setSuccess(true);
+                })
+        });
 
     }
 
     const handleSubmit = async () => {
-        console.log(address)
-        console.log(listOfWallets)
-
         const postData = {
             listOfWallets: listOfWallets
         }
         await axios.get(`http://localhost:5000?walletId=${listOfWallets[0]}`, {postData}).then(res => {
-            setSuccess(res.status === 200 ? true : false);
+            uploadFile(res, listOfWallets[0]); 
         }) 
     }
 
@@ -76,6 +78,10 @@ const Wallet = () => {
                 </div>
                 {success
                         ? <Banner title={'Success'} message={'The report is ready for download.'} style={{color: "rgb(50,200,50)", backgroundColor: "rgb(200,256,200)"}}></Banner>
+                        : ''
+                    }
+                {success
+                        ? <DownloadButton url={url}></DownloadButton>
                         : ''
                     }
             </div>

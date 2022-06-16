@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import { projectStorage } from '../services/firebase';
-import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { projectStorage, downloadUrl } from '../services/firebase';
 import Banner from './Banner';
-import DownLoadButton from './DownloadButton';
+import DownloadButton from './DownloadButton';
 
 const Document = () => {
     const [document, setDocument] = useState('');
@@ -14,16 +13,11 @@ const Document = () => {
     };
 
     const downloadFile = () => {
-        // Create a reference with an initial file path and name
-        const pathReference = ref(projectStorage, `pdf/${document}.pdf`);  
-
-
-        setDocument('');
         
-        
-        getDownloadURL(pathReference)
+        downloadUrl(document)
             .then((documentUrl) => {
                 setUrl(documentUrl);
+                setDocument('');
                 setErrorMessage('');
             })
             .catch((error) => {
@@ -64,7 +58,7 @@ const Document = () => {
                 : <>
                     {errorMessage !== ''
                         ? <Banner title={'Error'} message={errorMessage} style={{color: "rgb(200,50,50)", backgroundColor: "rgb(256,200,200)"}}></Banner>
-                        : <DownLoadButton url={url}></DownLoadButton>
+                        : <DownloadButton url={url}></DownloadButton>
                     }
                 </>
             }

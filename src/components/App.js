@@ -11,12 +11,12 @@ const App = () => {
                 </h1>
             </div>
             <div className="ui grid">
-                <div className="eight wide column">
+                <div className="sixteen wide column">
                     <Wallet></Wallet>
                 </div>
-                <div className="eight wide column">
+                {/* <div className="eight wide column">
                     <Document></Document>
-                </div>
+                </div> */}
             </div>
         </div>
     )
