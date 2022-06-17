@@ -4,9 +4,14 @@ import { downloadUrl, projectStorage } from '../services/firebase';
 import { ref, uploadString } from "firebase/storage";
 import Banner from './Banner';
 import DownloadButton from './DownloadButton';
+const { REACT_APP_ENV } = process.env;
 
 
 const Wallet = () => {
+
+    const apiUrl = REACT_APP_ENV === 'prod'
+        ? 'https://yoloco-be.herokuapp.com/'
+        : 'http://localhost:5000';
 
     const [address, setAddress] = useState('');
     const [url, setUrl] = useState('');
@@ -39,13 +44,27 @@ const Wallet = () => {
     }
 
     const handleSubmit = async () => {
-        const postData = {
-            listOfWallets: listOfWallets
-        }
-        await axios.get(`https://yoloco-be.herokuapp.com/?walletId=${listOfWallets[0]}`, {postData}).then(res => {
-            uploadFile(res, listOfWallets[0]); 
-        }) 
 
+        let bodyFormData = new FormData();
+
+        bodyFormData.append('listOfWallets', listOfWallets);
+
+        const code = Math.floor(Math.random() * 1000)
+
+        axios({
+            method: "post",
+            url: apiUrl,
+            data: bodyFormData,
+            headers: { "Content-Type": "multipart/form-data" },
+          })
+            .then(function (res) {
+              //handle success
+              uploadFile(res, `report-${code}`);
+            })
+            .catch(err => {
+              //handle error
+              console.log(err);
+            });
         
     }
 
@@ -71,13 +90,27 @@ const Wallet = () => {
         <div className='ui grid'>
             <div className="sixteen wide column">
                 <div className="ui form" style={{marginRight: "10%", marginLeft: "10%"}}>
-                    <div className="field">
-                        <label>Add a Wallet</label>
-                        <input type="text" value={address} placeholder="Wallet Address" onChange={handleTextChange}></input>
+                    <h3>Add your wallets</h3>
+                    <div className='ui grid'>
+                        <div className="eight wide column">
+                            <div className="field">
+                                <input type="text" value={address} placeholder="Wallet Address" onChange={handleTextChange}></input>
+                            </div>
+                        </div>
+                        <div className="eight wide column">
+                            <div className="ui black bottom attached button" tabIndex="0"  onClick={handleAdd}>Add</div>
+                        </div>
                     </div>
-                    <div className="ui black bottom attached button" tabIndex="0"  onClick={handleAdd}>Add</div>
-                    <div className="ui orange bottom attached button" tabIndex="0"  onClick={btnHandler} style={{marginRight: "30%", marginLeft: "30%"}} >Link MetaMask</div>
+                    <div className='ui grid'>
+                        <div className="sixteen wide column">
+                            <div className="ui orange bottom attached button" tabIndex="0"  onClick={btnHandler}>Link MetaMask</div>
+                        </div>
+                    </div>
 
+                    <div class="ui divider"></div>
+                    <div class="ui divider"></div>
+
+                    <h3>Generate your report</h3>
                     <table className="ui table">
                         <thead>
                             <tr>
