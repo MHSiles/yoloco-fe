@@ -45,9 +45,11 @@ const Wallet = () => {
 
     const handleSubmit = async () => {
 
-        var bodyFormData = new FormData();
+        let bodyFormData = new FormData();
 
         bodyFormData.append('listOfWallets', listOfWallets);
+
+        const code = Math.floor(Math.random() * 1000)
 
         axios({
             method: "post",
@@ -57,52 +59,12 @@ const Wallet = () => {
           })
             .then(function (res) {
               //handle success
-              uploadFile(res, 'report');
+              uploadFile(res, `report-${code}`);
             })
             .catch(err => {
               //handle error
               console.log(err);
             });
-
-        // var data = JSON.stringify({"listOfWallets": listOfWallets});
-
-        // var config = {
-        //     method: 'POST',
-        //     url: 'http://localhost:5000',
-        //     headers: { 
-        //         'Content-Type': 'application/json'
-        //     },
-        //     data : data
-        // };
-
-        // axios(config)
-        //     .then(function (response) {
-        //         console.log(JSON.stringify(response.data));
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-            // });
-        // const postData = {
-        //     listOfWallets: listOfWallets
-        // }
-        // const formData = new FormData();
-        // formData.append(
-        //     "listOfWallets",
-        //     listOfWallets
-        //     );
-        // console.log(formData);
-        // // await axios.get(`https://yoloco-be.herokuapp.com/?walletId=${listOfWallets[0]}`, {postData}).then(res => {
-        // //     uploadFile(res, listOfWallets[0]); 
-        // // }) 
-        // await axios.get(`http://localhost:5000?walletId=${listOfWallets[0]}`, {postData}).then(res => {
-        //     uploadFile(res, listOfWallets[0]); 
-        // }) 
-        // // await axios.get('http://localhost:5000/', formData).then(res => {
-        // //     uploadFile(res, listOfWallets[0]); 
-        // // }).catch(err => {
-        // //     console.log(err);
-        // // })
-
         
     }
 
